@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  mysql:
+    build: 
+      context: ./mysql
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    networks:
+      - my-network  # Define a custom network
+
+
+  php:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    depends_on:
+      - mysql
+    volumes:
+      - ./app:/var/www/html
+      # - ./app:/var/www/html/writable
+    networks:
+      - my-network  # Connect both services to the same networ
+    # command: /bin/bash -c "/var/www/html/set_permission.sh && apache2-foreground"
+networks:
+  my-network:
+    driver: bridge
+    # Define the custom network
+
+volumes:
+  mysql_data:
