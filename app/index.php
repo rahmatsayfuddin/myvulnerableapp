@@ -51,11 +51,11 @@ try {
     }
 
     //htmlspecialchars
-    if (isset($_GET["search"])) {
-        // Escape the user input to prevent XSS
-        $search = htmlspecialchars($_GET["search"], ENT_QUOTES, 'UTF-8');
-        echo "<p>Search Result: " . $search . "</p>";
-    }
+    // if (isset($_GET["search"])) {
+    //     // Escape the user input to prevent XSS
+    //     $search = htmlspecialchars($_GET["search"], ENT_QUOTES, 'UTF-8');
+    //     echo "<p>Search Result: " . $search . "</p>";
+    // }
 
     $sql = "SELECT * FROM movie_schedule WHERE LOWER(movie_name) LIKE LOWER('%$search%')";
     $stmt = $pdo->query($sql);
