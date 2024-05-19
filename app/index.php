@@ -44,10 +44,17 @@ require 'dbconnection.php';
   <?php 
 try {
     $search = isset($_GET['search']) ? $_GET['search'] : '';
-    // Define the SQL query
+
     if (isset($_GET["search"]))
     {
         echo "<p>Search Result :".$search."</p>";
+    }
+
+    //htmlspecialchars
+    if (isset($_GET["search"])) {
+        // Escape the user input to prevent XSS
+        $search = htmlspecialchars($_GET["search"], ENT_QUOTES, 'UTF-8');
+        echo "<p>Search Result: " . $search . "</p>";
     }
 
     $sql = "SELECT * FROM movie_schedule WHERE LOWER(movie_name) LIKE LOWER('%$search%')";
