@@ -1,28 +1,26 @@
 <?php
-
-$host = 'mysql'; // Replace with your MySQL host (service name or IP address)
+// Define database connection parameters
+$host = 'mysql';
+$dbname = 'vapp';
 $username = 'root';
 $password = 'root';
-$dbname = 'vapp';
 
 try {
-  $conn = new mysqli($host, $username, $password, $dbname);
-  echo "Connected to the MySQL database successfully! \n";
+    // Create a new PDO instance
+    $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8mb4";
+    $options = [
+        PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION, // Enable exceptions for errors
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,       // Set default fetch mode to associative array
+        PDO::ATTR_EMULATE_PREPARES   => false,                  // Disable emulation of prepared statements
+    ];
 
-  // Optional: Perform a simple query to test further (replace with your query)
-  $sql = "SELECT 1 + 1 AS result";
-  $result = $conn->query($sql);
+    $pdo = new PDO($dsn, $username, $password, $options);
 
-  if ($result) {
-    $row = $result->fetch_assoc();
-    echo "Simple query result: " . $row['result'] . "\n";
-  } else {
-    echo "Error running query: " . $conn->error . "\n";
-  }
-
-  $conn->close();
-} catch (mysqli_sql_exception $e) {
-  echo "Connection failed: " . $e->getMessage() . "\n";
+    // Connection successful message (for testing purposes, can be removed in production)
+    // echo "Database connection successful!<br>";
+} catch (PDOException $e) {
+    // Catch any errors and display the error message
+    echo "Database connection failed: " . $e->getMessage();
+    exit; // Stop further execution if the connection fails
 }
-
 ?>
