@@ -1,5 +1,7 @@
 <?php 
 require 'dbconnection.php';
+session_start();
+var_dump($_SESSION);
 ?>
 
 <!DOCTYPE html>
@@ -20,15 +22,32 @@ require 'dbconnection.php';
     </button>
     <div class="collapse navbar-collapse" id="mynavbar">
       <ul class="navbar-nav me-auto">
-        <!-- <li class="nav-item">
-          <a class="nav-link" href="javascript:void(0)">Link</a>
+        <li class="nav-item">
+          <a class="nav-link" href="loginui.php">Login</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="javascript:void(0)">Link</a>
+          <a class="nav-link"  href="registerui.php">Register</a>
         </li>
+
         <li class="nav-item">
-          <a class="nav-link" href="javascript:void(0)">Link</a>
-        </li> -->
+          <a class="nav-link" href="logout.php">Logout</a>
+        </li>
+
+        <?php
+        if (isset($_SESSION['role']) and ($_SESSION['role'] == "admin")) {
+        ?>
+                <li class="nav-item">
+                <a class="nav-link" href="import.php">Import</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="add.php">Add movie</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="check.php">Check Connection</a>
+                </li>
+        <?php
+        }
+        ?>
       </ul>
       <form class="d-flex" action="index.php" method="get">
         <input class="form-control me-2" type="text" placeholder="Search" name="search">
