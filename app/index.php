@@ -51,7 +51,6 @@ try {
     }
 
     $sql = "SELECT * FROM movie_schedule WHERE LOWER(movie_name) LIKE LOWER('%$search%')";
-    // Execute the query
     $stmt = $pdo->query($sql);
 
     //prepared statement
