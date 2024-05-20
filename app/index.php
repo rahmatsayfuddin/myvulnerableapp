@@ -1,7 +1,8 @@
 <?php 
 require 'dbconnection.php';
 session_start();
-var_dump($_SESSION);
+// var_dump($_SESSION);
+// echo isset($_SESSION['role']);
 ?>
 
 <!DOCTYPE html>
@@ -22,17 +23,20 @@ var_dump($_SESSION);
     </button>
     <div class="collapse navbar-collapse" id="mynavbar">
       <ul class="navbar-nav me-auto">
+        <?php if (!isset($_SESSION["username"])) {?>
         <li class="nav-item">
           <a class="nav-link" href="loginui.php">Login</a>
         </li>
         <li class="nav-item">
           <a class="nav-link"  href="registerui.php">Register</a>
         </li>
-
+        <?php }
+        else {
+        ?>
         <li class="nav-item">
           <a class="nav-link" href="logout.php">Logout</a>
         </li>
-
+            <?php } ?>
         <?php
         if (isset($_SESSION['role']) and ($_SESSION['role'] == "admin")) {
         ?>
@@ -82,7 +86,7 @@ try {
     //prepared statement
     // $sql = "SELECT * FROM movie_schedule WHERE LOWER(movie_name) LIKE LOWER(:search)";
     // $stmt = $pdo->prepare($sql);
-
+    // $stmt->execute(['search' => "%$search%"]);
 
     // Check if any results were returned
     if ($stmt->rowCount() > 0) {
@@ -94,7 +98,7 @@ try {
     ?>
     <div class="col-md-4">
         <div class="card">
-            <img class="card-img-top" src="../bootstrap4/img_avatar1.png" alt="Card image" style="width:100%">
+            <img class="card-img-top" src="<?php echo "assets/".$row['movie_image'];?>" alt="Card image" style="width:100%">
             <div class="card-body">
             <h4 class="card-title"><?php echo htmlspecialchars($row['movie_name']) ?></h4>
             <p class="card-text"><?php echo htmlspecialchars($row['movie_release']) ?></p>
