@@ -2,7 +2,10 @@
 require 'dbconnection.php';
 session_start();
 // var_dump($_SESSION);
-// echo isset($_SESSION['role']);
+
+if ($_SESSION['role']!="admin"){
+    header('Location: index.php');
+}
 ?>
 
 <!DOCTYPE html>
@@ -113,6 +116,50 @@ session_start();
             echo "Error: " . $stmt->errorInfo()[2];
         }
     }
+    ?>
+
+
+<?php
+    // if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    //     $movie_name = htmlspecialchars($_POST['movie_name']);
+    //     $movie_synopsis = htmlspecialchars($_POST['movie_synopsis']);
+    //     $movie_duration = $_POST['movie_duration'];
+    //     $movie_release = $_POST['movie_release'];
+
+    //     // Secure file upload
+    //     $target_dir = "assets/";
+    //     $target_file = $target_dir . basename($_FILES["movie_image"]["name"]);
+    //     $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+    //     $allowed_types = ['jpg', 'jpeg', 'png', 'gif'];
+
+    //     // Check if file is a valid image type
+    //     if (in_array($imageFileType, $allowed_types) && getimagesize($_FILES["movie_image"]["tmp_name"])) {
+    //         $new_file_name = uniqid() . '.' . $imageFileType;
+    //         $new_file_path = $target_dir . $new_file_name;
+    //         if (move_uploaded_file($_FILES["movie_image"]["tmp_name"], $new_file_path)) {
+    //             $movie_image = $new_file_name;
+
+    //             // Use prepared statements for SQL query
+    //             $sql = "INSERT INTO movie_schedule (movie_name, movie_synopsis, movie_image, movie_duration, movie_release) VALUES (:movie_name, :movie_synopsis, :movie_image, :movie_duration, :movie_release)";
+    //             $stmt = $pdo->prepare($sql);
+    //             $stmt->bindParam(':movie_name', $movie_name);
+    //             $stmt->bindParam(':movie_synopsis', $movie_synopsis);
+    //             $stmt->bindParam(':movie_image', $movie_image);
+    //             $stmt->bindParam(':movie_duration', $movie_duration, PDO::PARAM_INT);
+    //             $stmt->bindParam(':movie_release', $movie_release, PDO::PARAM_INT);
+
+    //             if ($stmt->execute()) {
+    //                 echo "New movie added successfully";
+    //             } else {
+    //                 echo "Error: " . $stmt->errorInfo()[2];
+    //             }
+    //         } else {
+    //             echo "Error uploading file.";
+    //         }
+    //     } else {
+    //         echo "Invalid file type.";
+    //     }
+    // }
     ?>
     </div>
 </div>
